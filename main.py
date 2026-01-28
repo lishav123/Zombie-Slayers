@@ -37,6 +37,9 @@ while not close_window:
                 bg_vel = 15
                 ninja_pos_flip = True
 
+            if event.key == pygame.K_SPACE:
+                ninja.update_state("throw")
+
         if event.type == pygame.KEYUP:
             ninja.update_state("idle")
             bg_vel = 0
