@@ -1,15 +1,26 @@
 import pygame
 
 from characters import Ninja
+from characters import BackgroundParallex
 
 pygame.init()
 
 WIDTH, HEIGHT = 1200, 800
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Zombie Slayer - Ninja")
-ninja = Ninja(window, 0, 0)
+
+
+background = BackgroundParallex(window, 0, -800, 2)
+background.load_state()
+bg_vel = 0
+
+ninja = Ninja(window, 550, 437, 0.5)
 
 fps = pygame.time.Clock()
+
+x = []
+y = []
+time = 0
 
 close_window = False
 while not close_window:
@@ -21,12 +32,16 @@ while not close_window:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
                 ninja.update_state("run")
-                print("Right Execured")
+                bg_vel = -15
 
         if event.type == pygame.KEYUP:
             ninja.update_state("idle")
+            bg_vel = 0
 
-    window.fill((25, 25, 25))
+    time += 1
+    x.append(background.x)
+    y.append(time)
+    background.parallex(bg_vel)
     ninja.display_state()
     pygame.display.flip()
 
