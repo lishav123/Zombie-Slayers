@@ -15,12 +15,9 @@ background.load_state()
 bg_vel = 0
 
 ninja = Ninja(window, 550, 437, 0.5)
+ninja_pos_flip = False
 
 fps = pygame.time.Clock()
-
-x = []
-y = []
-time = 0
 
 close_window = False
 while not close_window:
@@ -33,16 +30,19 @@ while not close_window:
             if event.key == pygame.K_RIGHT:
                 ninja.update_state("run")
                 bg_vel = -15
+                ninja_pos_flip = False
+
+            if event.key == pygame.K_LEFT:
+                ninja.update_state("run")
+                bg_vel = 15
+                ninja_pos_flip = True
 
         if event.type == pygame.KEYUP:
             ninja.update_state("idle")
             bg_vel = 0
 
-    time += 1
-    x.append(background.x)
-    y.append(time)
     background.parallex(bg_vel)
-    ninja.display_state()
+    ninja.display_state(flip=ninja_pos_flip)
     pygame.display.flip()
 
 pygame.quit()

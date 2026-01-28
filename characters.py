@@ -1,6 +1,7 @@
 
 from pygame import image
 from pygame import transform
+from pygame import constants
 
 from assets import NinjaSprite
 
@@ -25,11 +26,12 @@ class Ninja:
         if state == "run":
             self.current_state = self.ninja_sprite.run
 
-    def display_state(self):
+    def display_state(self, flip):
+
         img = image.load(f"./assets/protagonist/png/{self.current_state[self._index]}")
-        self.window.blit(
-            transform.scale(img, (img.get_width() * self.scale,
-                                 img.get_height() * self.scale)), (self.x, self.y))
+        resize = transform.scale(img, (img.get_width() * self.scale, img.get_height() * self.scale))
+
+        self.window.blit(transform.flip(resize, flip, False), (self.x, self.y))
 
         if self._index == len(self.current_state) - 1:
             self._index = 0
