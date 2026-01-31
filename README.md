@@ -6,3 +6,28 @@ Hello there, readers! You might be wondering that what did I made, well it's a g
 
 The is simple game in 2 modes, **zombie killing mode** and **survival mode**, assets I have used are free, I took it from a website I didn't remember, but if you will go and search in google *free ninja sprites and zombies sprites* you will get the stuff.
 
+## How to play this game?
+
+Playing this game is easy 3 step, just you need to have **Python** and **git** on your machine, or you can also download it from **Github** itself.
+
+**Step 1:** Clone the repo
+
+```bash
+git clone the-repo-link
+```
+
+**Step 2:** Install pygame in your machine.
+
+```bash
+pip install pygame
+```
+
+**Step 3:** Execute the main file
+
+```bash
+python main.py
+```
+
+## Understanding of the Code in this Game
+
+### About the file info
