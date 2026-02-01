@@ -2,8 +2,11 @@
 from pygame import image
 from pygame import transform
 from pygame import constants
+from pygame import time
 
 from assets import NinjaSprite
+
+fps = time.Clock()
 
 class Ninja:
     def __init__(self, window, x, y, scale):
@@ -35,13 +38,22 @@ class Ninja:
         except IndexError:
             self._index = 0
         finally:
-            img = image.load(f"./assets/protagonist/png/{self.current_state[self._index]}")
-            resize = transform.scale(img, (img.get_width() * self.scale, img.get_height() * self.scale))
-            self.window.blit(transform.flip(resize, flip, False), (self.x, self.y))
 
-            if self._index == len(self.current_state) - 1:
-                self._index = 0
-            self._index += 1
+            if "Throw" in self.current_state[0]:
+                for i in range(len(self.current_state)):
+                    fps.tick(2)
+                    img = image.load(f"./assets/protagonist/png/{self.current_state[i]}")
+                    resize = transform.scale(img, (img.get_width() * self.scale, img.get_height() * self.scale))
+                    self.window.blit(transform.flip(resize, flip, False), (self.x, self.y))
+
+            else:
+                img = image.load(f"./assets/protagonist/png/{self.current_state[self._index]}")
+                resize = transform.scale(img, (img.get_width() * self.scale, img.get_height() * self.scale))
+                self.window.blit(transform.flip(resize, flip, False), (self.x, self.y))
+
+                if self._index == len(self.current_state) - 1:
+                    self._index = 0
+                self._index += 1
 
 
 class Zombie:

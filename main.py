@@ -1,7 +1,9 @@
 import pygame
 
-from characters import Ninja
+# from characters import Ninja
 from characters import BackgroundParallex
+
+from sprites import Ninja
 
 pygame.init()
 
