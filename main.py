@@ -4,6 +4,7 @@ import pygame
 from characters import BackgroundParallex
 
 from sprites import Ninja
+from sprites import Zombie
 
 pygame.init()
 
@@ -12,12 +13,16 @@ window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Zombie Slayer - Ninja")
 
 
-background = BackgroundParallex(window, 0, -800, 2)
+background = BackgroundParallex(window, 0, -790, 2)
 background.load_state()
-bg_vel = 0
 
-ninja = Ninja(window, 550, 437, 0.5)
+ninja = Ninja(window, 550, 500, 0.4)
 ninja_pos_flip = False
+ninja_speed = 0
+
+zombie = Zombie(window, 450, 494, 0.359)
+zombie_pos_flip = False
+zombie_speed = 0
 
 fps = pygame.time.Clock()
 
@@ -30,23 +35,42 @@ while not close_window:
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
-                ninja.update_state("run")
-                bg_vel = -15
+                ninja.change_state("run")
                 ninja_pos_flip = False
+                ninja.change_position(ninja.x + 10, ninja.y)
+                ninja_speed = 10
+
+            if event.key == pygame.K_s:
+                zombie.change_state("run")
+                zombie_pos_flip = False
+                zombie.change_position(zombie.x + 10, zombie.y)
+                zombie_speed = 5
+
+            if event.key == pygame.K_a:
+                zombie.change_state("run")
+                zombie_pos_flip = True
+                zombie.change_position(zombie.x - 10, zombie.y)
+                zombie_speed = -5
 
             if event.key == pygame.K_LEFT:
-                ninja.update_state("run")
-                bg_vel = 15
+                ninja.change_state("run")
                 ninja_pos_flip = True
-
-            if event.key == pygame.K_SPACE:
-                ninja.update_state("throw")
+                ninja.change_position(ninja.x - 10, ninja.y)
+                ninja_speed = -10
 
         if event.type == pygame.KEYUP:
-            ninja.update_state("idle")
-            bg_vel = 0
+            ninja.change_state("idle")
+            ninja_speed = 0
 
-    background.parallex(bg_vel)
+            zombie.change_state("idle")
+            zombie_speed = 0
+
+    background.parallex(0)
+    
+    zombie.change_position(zombie.x + zombie_speed, zombie.y)
+    zombie.display_state(flip=zombie_pos_flip)
+
+    ninja.change_position(ninja.x + ninja_speed, ninja.y)
     ninja.display_state(flip=ninja_pos_flip)
     pygame.display.flip()
 
