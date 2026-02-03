@@ -4,6 +4,13 @@ from assets import ZombieSprite
 from pygame import transform
 from pygame import image
 
+'''
+TODO 1: Complete endloop functionality
+TODO 2: Complete test with attack and throw
+TODO 3: Plan the AI
+TODO 4: Plan the senario or flow of game
+'''
+
 class Sprites:
     def __init__(self, window, x, y, scale, sprite, location):
         self.window  = window
@@ -25,6 +32,9 @@ class Sprites:
 
         elif state == "run":
             self.state = self.sprite.RUN
+
+    def sprites_collide(self, other_sprite):
+        ...
 
     def display_state(self, flip=False, end_loop=False):
         try:
