@@ -6,7 +6,7 @@ zombies = listdir("assets/enemy/male/")
 class NinjaSprite:
     IDLE = sorted(list(filter(lambda x: "Idle" in x, files)))
     RUN  = sorted(list(filter(lambda x: "Run"  in x, files)))
-    throw = sorted(list(filter(lambda x: "Throw" in x, files)))
+    THROW = sorted(list(filter(lambda x: "Throw" in x, files)))
 
 class ZombieSprite:
     IDLE = sorted(list(filter(lambda x: "Idle" in x, zombies)))

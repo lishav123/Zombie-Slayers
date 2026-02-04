@@ -46,6 +46,9 @@ while not close_window:
                 ninja_pos_flip = True
                 ninja_speed = -10
 
+            if event.key == pygame.K_SPACE:
+                ninja.change_state("throw", endloop=True)
+
         if event.type == pygame.KEYUP:
             ninja.change_state("idle")
             ninja_speed = 0

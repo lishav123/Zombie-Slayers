@@ -22,31 +22,55 @@ class Sprites:
         self.state   = sprite.IDLE
         self.location = location
 
+        self._loop_stack = []
+
     def change_position(self, x, y):
         self.x = x 
         self.y = y
 
-    def change_state(self, state):
+    def change_state(self, state, endloop=False):
+
         if state == "idle":
             self.state = self.sprite.IDLE
 
         elif state == "run":
             self.state = self.sprite.RUN
 
+        elif state == "throw":
+            self.state = self.sprite.THROW
+        
+        if endloop:
+            self._loop_stack.append({"state_name": state, "state_data": self.state})
+
+        print(f"STATE: {state} | ENDLOOP: {endloop} | LOOP_STACK: {self._loop_stack}")
+
     def sprites_collide(self, other_sprite):
         ...
 
-    def display_state(self, flip=False, end_loop=False):
+    def display_state(self, flip=False):
         try:
             self.state[self._index]
         except IndexError:
             self._index = 0
+            print(f"EXCEPTION HERE: index is {self._index}, computing: {self.state}\n")
+
         finally:
-            img = image.load(f"{self.location}/{self.state[self._index]}")
+            img = None
+            if self._loop_stack:
+                last_frame = len(self._loop_stack[0]["state_data"])
+                img = image.load(f"{self.location}/{self._loop_stack[0]["state_data"][self._index]}")
+
+                if self._index == last_frame - 1:
+                    self._loop_stack.pop(0)
+                    self._index = 0
+
+            else:
+                img = image.load(f"{self.location}/{self.state[self._index]}")
+                
             resize = transform.scale(img, (img.get_width() * self.scale, img.get_height() * self.scale))
             self.window.blit(transform.flip(resize, flip, False), (self.x, self.y))
 
-            if self._index == len(self.state) - 1:
+            if self._index == len(self.state) - 1 and self._loop_stack:
                 self._index = 0
             self._index += 1
 
