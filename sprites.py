@@ -30,19 +30,18 @@ class Sprites:
 
     def change_state(self, state, endloop=False):
 
-        if state == "idle":
-            self.state = self.sprite.IDLE
+        if not self._loop_stack:
+            if state == "idle":
+                self.state = self.sprite.IDLE
 
-        elif state == "run":
-            self.state = self.sprite.RUN
+            elif state == "run":
+                self.state = self.sprite.RUN
 
-        elif state == "throw":
-            self.state = self.sprite.THROW
+            elif state == "throw":
+                self.state = self.sprite.THROW
         
         if endloop:
             self._loop_stack.append({"state_name": state, "state_data": self.state})
-
-        print(f"STATE: {state} | ENDLOOP: {endloop} | LOOP_STACK: {self._loop_stack}")
 
     def sprites_collide(self, other_sprite):
         ...
@@ -52,7 +51,6 @@ class Sprites:
             self.state[self._index]
         except IndexError:
             self._index = 0
-            print(f"EXCEPTION HERE: index is {self._index}, computing: {self.state}\n")
 
         finally:
             img = None
@@ -63,6 +61,7 @@ class Sprites:
                 if self._index == last_frame - 1:
                     self._loop_stack.pop(0)
                     self._index = 0
+                    self.change_state("idle")
 
             else:
                 img = image.load(f"{self.location}/{self.state[self._index]}")

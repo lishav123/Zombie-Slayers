@@ -51,7 +51,8 @@ while not close_window:
 
         if event.type == pygame.KEYUP:
             ninja.change_state("idle")
-            ninja_speed = 0
+            print("HEllo WoRLD")
+            ninja_speed = 0 
 
     background.parallex(0)
 
