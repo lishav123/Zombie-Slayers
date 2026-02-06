@@ -8,6 +8,8 @@ from sprites import Zombie
 
 pygame.init()
 
+chance = 10
+
 WIDTH, HEIGHT = 1200, 800
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Zombie Slayer - Ninja")
@@ -46,12 +48,12 @@ while not close_window:
                 ninja_pos_flip = True
                 ninja_speed = -10
 
-            if event.key == pygame.K_SPACE:
+            if event.key == pygame.K_SPACE and chance != 0:
                 ninja.change_state("throw", endloop=True)
+                chance -= 1
 
         if event.type == pygame.KEYUP:
             ninja.change_state("idle")
-            print("HEllo WoRLD")
             ninja_speed = 0 
 
     background.parallex(0)

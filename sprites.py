@@ -66,12 +66,28 @@ class Sprites:
             else:
                 img = image.load(f"{self.location}/{self.state[self._index]}")
                 
-            resize = transform.scale(img, (img.get_width() * self.scale, img.get_height() * self.scale))
+            resize = transform.scale(img, (img.get_width () * self.scale, img.get_height() * self.scale))
             self.window.blit(transform.flip(resize, flip, False), (self.x, self.y))
 
             if self._index == len(self.state) - 1 and self._loop_stack:
                 self._index = 0
             self._index += 1
+
+class StaticSprite:
+    def __init__(self, window, x, y, scale):
+        self.window = window
+        self.x = x
+        self.y = y
+        self.scale = scale
+
+    def change_state(self, x, y):
+        self.x += x
+        self.y += y
+
+    def display_state(self, flip=False):
+        img = image.load(f"assets/protagonist/png/kunai.png")
+        resize = transform.scale(img, (img.get_width () * self.scale, img.get_height() * self.scale))
+        self.window.blit(transform.flip(resize, flip, False), (self.x, self.y))
 
 class Ninja(Sprites):
     def __init__(self, window, x, y, scale):
@@ -80,3 +96,7 @@ class Ninja(Sprites):
 class Zombie(Sprites):
     def __init__(self, window, x, y, scale):
         super().__init__(window, x, y, scale, ZombieSprite, "./assets/enemy/male")
+
+class Kunai(StaticSprite):
+    ...
+        
