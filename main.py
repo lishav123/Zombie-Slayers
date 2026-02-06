@@ -5,6 +5,7 @@ from characters import BackgroundParallex
 
 from sprites import Ninja
 from sprites import Zombie
+from sprites import Kunai
 
 pygame.init()
 
@@ -27,6 +28,7 @@ zombie_pos_flip = False
 zombie_speed = 2
 zombie.change_state("run")
 
+kunai = Kunai(window, ninja.x, ninja.y + 65, 0.5)
 fps = pygame.time.Clock()
 
 close_window = False
@@ -64,6 +66,9 @@ while not close_window:
     if ninja.x > 1100:
         ninja.x = 1100
     
+
+    kunai.display_state(flip=ninja_pos_flip)
+
     zombie.change_position(zombie.x + zombie_speed, zombie.y)
     zombie.display_state(flip=zombie_pos_flip)
 
