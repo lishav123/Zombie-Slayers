@@ -21,6 +21,7 @@ class Sprites:
         self.sprite = sprite
         self.state   = sprite.IDLE
         self.location = location
+        self.object = None
 
         self._loop_stack = []
 
@@ -39,6 +40,9 @@ class Sprites:
 
             elif state == "throw":
                 self.state = self.sprite.THROW
+
+            elif state == "attack":
+                self.state = self.sprite.ATTACK
         
         if endloop:
             self._loop_stack.append({"state_name": state, "state_data": self.state})
@@ -49,6 +53,7 @@ class Sprites:
     def display_state(self, flip=False):
         try:
             self.state[self._index]
+
         except IndexError:
             self._index = 0
 
@@ -67,7 +72,8 @@ class Sprites:
                 img = image.load(f"{self.location}/{self.state[self._index]}")
                 
             resize = transform.scale(img, (img.get_width () * self.scale, img.get_height() * self.scale))
-            self.window.blit(transform.flip(resize, flip, False), (self.x, self.y))
+            self.object = transform.flip(resize, flip, False)
+            self.window.blit(self.object, (self.x, self.y))
 
             if self._index == len(self.state) - 1 and self._loop_stack:
                 self._index = 0
