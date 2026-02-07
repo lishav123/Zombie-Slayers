@@ -47,8 +47,19 @@ class Sprites:
         if endloop:
             self._loop_stack.append({"state_name": state, "state_data": self.state})
 
-    def sprites_collide(self, other_sprite):
-        ...
+    def sprites_collide(self, other_sprite, r = 5):
+        print("I am being called")
+        if self.object is None:
+            print("None")
+            return False
+
+        center_self = ((self.object.get_width() / 2) + self.x, (self.object.get_height() / 2) + self.y)
+        center_other = ((other_sprite.object.get_width() / 2) + other_sprite.x, (other_sprite.object.get_height() / 2) + other_sprite.y)
+
+        dist = lambda dist1, dist2: ((dist2[0] - dist1[0]) ** 2 + (dist2[1] - dist1[1]) ** 2) ** 0.5
+
+        print(dist(center_self, center_other))
+        return dist(center_self, center_other) < r
 
     def display_state(self, flip=False):
         try:

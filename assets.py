@@ -13,7 +13,7 @@ class NinjaSprite:
 class ZombieSprite:
     IDLE = sorted(list(filter(lambda x: "Idle" in x, zombies)))
     RUN  = sorted(list(filter(lambda x: "Walk" in x, zombies)))
-    attack = sorted(list(filter(lambda x: "Attack" in x, zombies)))
+    ATTACK = sorted(list(filter(lambda x: "Attack" in x, zombies)))
 
 if __name__ == '__main__':
     print("(Ninja Figures)", "=" * 20, sep="")
@@ -24,4 +24,4 @@ if __name__ == '__main__':
     print("\n(Zombie Figures)", "=" * 20, sep="")
     print(f"Idle Z figure: {len(ZombieSprite.IDLE)}")
     print(f"Walk Z figure: {len(ZombieSprite.RUN)}")
-    print(f"Attack Z figure: {len(ZombieSprite().attack)}")
+    print(f"Attack Z figure: {len(ZombieSprite.ATTACK)}")

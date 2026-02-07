@@ -15,7 +15,6 @@ WIDTH, HEIGHT = 1200, 800
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Zombie Slayer - Ninja")
 
-
 background = BackgroundParallex(window, 0, -790, 2)
 background.load_state()
 
@@ -27,7 +26,6 @@ zombie = Zombie(window, -50, 494, 0.359)
 zombie_pos_flip = False
 zombie_speed = 2
 zombie.change_state("run")
-
 
 kunai_speed = 40
 kunaies = []
@@ -53,7 +51,6 @@ while not close_window:
                 ninja_speed = -10
 
             if event.key == pygame.K_a:
-                print("a is pressed")
                 ninja.change_state("attack", endloop=True)
                 
             if event.key == pygame.K_SPACE and chance != 0:
@@ -79,6 +76,15 @@ while not close_window:
 
         if kunai["state_object"].x < -100 or kunai["state_object"].x > WIDTH + 100:
             del kunaies[index]
+
+
+    if zombie.sprites_collide(ninja, r=100):
+        zombie_speed = 0
+        ninja_speed = 0
+        zombie.change_state("attack")
+    else:
+        zombie_speed = 2
+        zombie.change_state("run")
 
     zombie.change_position(zombie.x + zombie_speed, zombie.y)
     zombie.display_state(flip=zombie_pos_flip)
