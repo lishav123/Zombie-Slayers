@@ -28,7 +28,10 @@ zombie_pos_flip = False
 zombie_speed = 2
 zombie.change_state("run")
 
-kunai = Kunai(window, ninja.x, ninja.y + 65, 0.5)
+
+kunai_speed = 40
+kunaies = []
+
 fps = pygame.time.Clock()
 
 close_window = False
@@ -42,16 +45,16 @@ while not close_window:
             if event.key == pygame.K_RIGHT:
                 ninja.change_state("run")
                 ninja_pos_flip = False
-                ninja.change_position(ninja.x + 10, ninja.y)
                 ninja_speed = 10
-
+                
             if event.key == pygame.K_LEFT:
                 ninja.change_state("run")
                 ninja_pos_flip = True
                 ninja_speed = -10
-
+                
             if event.key == pygame.K_SPACE and chance != 0:
                 ninja.change_state("throw", endloop=True)
+                kunaies.append({"state_object": Kunai(window, ninja.x, ninja.y + 75, 0.5), "speed": -kunai_speed if ninja_pos_flip else kunai_speed})
                 chance -= 1
 
         if event.type == pygame.KEYUP:
@@ -66,8 +69,12 @@ while not close_window:
     if ninja.x > 1100:
         ninja.x = 1100
     
+    for index, kunai in enumerate(kunaies):
+        kunai["state_object"].change_position(kunai["state_object"].x + kunai["speed"], kunai["state_object"].y) 
+        kunai["state_object"].display_state(flip=kunai["speed"] < 0)
 
-    kunai.display_state(flip=ninja_pos_flip)
+        if kunai["state_object"].x < -100 or kunai["state_object"].x > WIDTH + 100:
+            del kunaies[index]
 
     zombie.change_position(zombie.x + zombie_speed, zombie.y)
     zombie.display_state(flip=zombie_pos_flip)

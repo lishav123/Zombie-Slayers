@@ -80,13 +80,13 @@ class StaticSprite:
         self.y = y
         self.scale = scale
 
-    def change_state(self, x, y):
-        self.x += x
-        self.y += y
+    def change_position(self, x, y):
+        self.x = x
+        self.y = y
 
     def display_state(self, flip=False):
         img = image.load(f"assets/protagonist/png/kunai.png")
-        resize = transform.scale(img, (img.get_width () * self.scale, img.get_height() * self.scale))
+        resize = transform.scale(img, (img.get_width() * self.scale, img.get_height() * self.scale))
         self.window.blit(transform.flip(resize, flip, False), (self.x, self.y))
 
 class Ninja(Sprites):
