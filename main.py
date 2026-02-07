@@ -51,6 +51,10 @@ while not close_window:
                 ninja.change_state("run")
                 ninja_pos_flip = True
                 ninja_speed = -10
+
+            if event.key == pygame.K_a:
+                print("a is pressed")
+                ninja.change_state("attack", endloop=True)
                 
             if event.key == pygame.K_SPACE and chance != 0:
                 ninja.change_state("throw", endloop=True)
