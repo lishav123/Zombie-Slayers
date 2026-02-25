@@ -30,4 +30,6 @@ python main.py
 
 ## Understanding of the Code in this Game
 
+I've tried my best by writing my code such as it's documented!
+
 ### About the file info
